@@ -1,18 +1,20 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
 
-public class CameraManager : MonoBehaviour
+public class CameraManager : Singleton<CameraManager>
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private List<CinemachineVirtualCamera> cmCameras = new List<CinemachineVirtualCamera>();
+    public CinemachineVirtualCamera currentCamera;
 
-    // Update is called once per frame
-    void Update()
+    public void ActivateCamera(int CameraIndex)
     {
-        
+        foreach (var camera in cmCameras)
+        {
+            camera.gameObject.SetActive(false);
+        }
+        cmCameras[CameraIndex].gameObject.SetActive(true);
+        currentCamera = cmCameras[CameraIndex];
     }
 }
